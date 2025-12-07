@@ -68,6 +68,10 @@
 </head>
 <body>
 
+  <!-- Background music -->
+  <audio id="bgMusic" src="audio/birthday.mp3" autoplay loop></audio>
+  <audio id="popSound" src="audio/pop.mp3"></audio>
+
   <!-- PAGE 0 -->
   <div id="page0" class="page active">
     <div class="loading-container">
@@ -159,7 +163,7 @@
   let gameInterval = null;
 
   const balloonImages = ['images/balloon1.png', 'images/balloon2.png'];
-
+  const popSound = document.getElementById("popSound"); // ❤️ FIXED
   // auto transition from loading -> page1
   setTimeout(() => {
     page0.classList.remove('active');
@@ -189,6 +193,8 @@
 
     balloon.onclick = function (e) {
       e.stopPropagation();
+      popSound.currentTime = 0;   // restart sound
+      popSound.play();            // 🔥 POP SOUND HERE
       balloon.style.animation = 'none';
       balloon.style.transform = 'scale(0)';
       setTimeout(() => balloon.remove(), 200);
@@ -257,7 +263,13 @@
       }, i*10);
     }
   }
+
+  // Mobile autoplay fix
+  const bgMusic = document.getElementById('bgMusic');
+  document.body.addEventListener('click', () => {
+    if(bgMusic.paused){ bgMusic.play(); }
+  }, { once: true });
+
 </script>
 </body>
-
-</html>
+</html> 
