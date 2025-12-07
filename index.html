@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>Happy Birthday Nami! 🎂</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Caveat:wght@700&family=Satisfy&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Caveat', cursive; overflow-x: hidden; touch-action: manipulation; }
+
+    .page { display: none; min-height: 100vh; padding: 20px; animation: fadeIn .5s ease; position: relative; overflow: hidden; background-image: url("images/back1.jpg"); background-size:cover; background-position:center; }
+    .page.active { display:flex; flex-direction:column; align-items:center; justify-content:center; }
+    @keyframes fadeIn { from { opacity:0 } to { opacity:1 } }
+
+    /* Loading */
+    #page0 { background: linear-gradient(135deg,#fff5f9 0%,#ffe8f3 100%); background-image: none; }
+    .loading-container { text-align:center; width:90%; max-width:560px; }
+    .loading-text { font-size:32px; color:#dc143c; font-weight:700; font-family:'Satisfy',cursive; margin-bottom:24px; }
+    .progress-wrapper { position:relative; width:100%; height:44px; background:#fff; border-radius:25px; border:3px solid #dc143c; overflow:visible; box-shadow:0 5px 20px rgba(0,0,0,.12); }
+    .progress-bar { height:100%; width:0; background:linear-gradient(90deg,#dc143c,#ff0000); animation:fillBar 3s ease-in-out forwards; border-radius:25px; }
+    @keyframes fillBar { from { width:0 } to { width:100% } }
+    .f1-car { position:absolute; top:-30px; left:0; width:130px; animation:driveCar 3s forwards ease-in-out; filter:drop-shadow(0 5px 15px rgba(0,0,0,.25)); z-index:10; }
+    @keyframes driveCar { from { left:-150px } to { left:calc(100% - 30px) } }
+
+    /* Page1 - balloons */
+    .title { font-size:48px; color:#ff1493; background:rgba(255,255,255,.95); padding:25px 35px; border-radius:25px; margin-bottom:24px; font-family:'Pacifico',cursive; text-align:center; box-shadow:3px 3px 10px rgba(0,0,0,.1); }
+    .btn { padding:18px 44px; font-size:24px; border-radius:50px; border:0; cursor:pointer; color:#fff; background:linear-gradient(135deg,#ff69b4,#ff1493); box-shadow:0 8px 20px rgba(255,20,147,.25); font-family:'Caveat',cursive; font-weight:bold; transition: all 0.3s; }
+    .btn:hover { transform: scale(1.05); }
+    .balloon { position:absolute; width:70px; cursor:pointer; filter:drop-shadow(0 6px 10px rgba(0,0,0,.2)); animation:floatUp linear; }
+    @keyframes floatUp { 0%{ bottom:-120px } 100%{ bottom:110vh } }
+    .counter { position:fixed; top:20px; right:20px; background:#fff; padding:18px 26px; border-radius:20px; font-size:30px; color:#ff1493; box-shadow:0 6px 20px rgba(0,0,0,.12); display:none; z-index:100; }
+
+    /* Candle */
+    .message-box { background:rgba(255,255,255,.98); padding:32px; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,.12); font-size:24px; color:#ff1493; margin-bottom:24px; max-width:720px; text-align:center; font-family:'Satisfy',cursive; }
+    .candle-wrapper { position:relative; text-align:center; }
+    .candle-img { width:220px; filter:drop-shadow(0 10px 20px rgba(0,0,0,.18)); margin-bottom:25px; }
+    
+    .friend-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.95); z-index:1000; pointer-events:none; }
+    .friend-img { position:absolute; width:350px; height:350px; top:50%; left:50%; transform:translate(-50%,-50%); border-radius:50%; object-fit:cover; border:6px solid #ff1493; box-shadow:0 0 50px rgba(255,20,147,0.8); animation:friendReveal 4s ease-out forwards; }
+    @keyframes friendReveal { 
+      0%{ width:0; height:0; opacity:0; transform:translate(-50%,-50%) scale(0); } 
+      30%{ opacity:1; width:350px; height:350px; transform:translate(-50%,-50%) scale(1); } 
+      70%{ transform:translate(-50%,-50%) scale(1.05); } 
+      100%{ width:120vw; height:120vh; opacity:0; transform:translate(-50%,-50%) scale(2.5); border-radius:0; } 
+    }
+
+    /* Wish Page */
+    .speech-bubble { background:rgba(255,255,255,.98); padding:22px; border-radius:20px; box-shadow:0 8px 25px rgba(0,0,0,.12); font-size:22px; color:#ff69b4; margin:18px 0; font-family:'Satisfy',cursive; max-width:550px; text-align:center; }
+    textarea { width:100%; max-width:520px; height:120px; padding:18px; font-size:18px; border-radius:14px; border:3px solid #ff69b4; resize:none; font-family:'Caveat',cursive; }
+    .paper { background:linear-gradient(135deg,#fdfbf3,#fff9e6); padding:28px; border-radius:16px; box-shadow:0 15px 40px rgba(0,0,0,.12); max-width:600px; border:3px solid #d4af37; }
+
+    /* Cake page */
+    #page3.knife-cursor { cursor: url("images/knife.png") 10 10, auto; }
+    .cake-img { width:350px; cursor:pointer; filter: drop-shadow(0 15px 30px rgba(0,0,0,.18)); transition:transform 0.3s; }
+    .cake-img:hover { transform:scale(1.03); }
+
+    .reveal-text { font-size:48px; color:#ff1493; margin:28px 0; font-family:'Caveat',cursive; font-weight:bold; text-align:center; text-shadow: 2px 2px 5px rgba(0,0,0,0.2); }
+    .final-message { max-width:750px; background:rgba(255,255,255,.98); padding:36px; border-radius:20px; box-shadow:0 18px 60px rgba(0,0,0,.12); border:4px solid #ff69b4; color:#ff1493; text-align:center; font-size:20px; line-height:1.8; font-family:'Caveat',cursive; }
+    .final-message strong { font-size:24px; }
+    .signature { margin-top:20px; font-size:24px; color:#ff1493; font-family:'Caveat',cursive; font-weight:bold; }
+    
+    .confetti { position:fixed; width:12px; height:12px; animation:confettiFall 4s linear; pointer-events:none; z-index:50; }
+    @keyframes confettiFall { 0%{ transform:translateY(-120px) rotate(0deg); opacity:1; } 100%{ transform:translateY(110vh) rotate(800deg); opacity:0; } }
+    
+    .hidden { display:none !important; }
+  </style>
+</head>
+<body>
+
+  <!-- PAGE 0 -->
+  <div id="page0" class="page active">
+    <div class="loading-container">
+      <div class="loading-text">Surprise is Loading... ✨</div>
+      <div class="progress-wrapper">
+        <img src="images/f1.png" class="f1-car" alt="F1 Car">
+        <div class="progress-bar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE 1 -->
+  <div id="page1" class="page">
+    <h1 class="title">Happy Birthday GoldFish 💗🎂✨</h1>
+    <div id="gameSection">
+      <button class="btn" onclick="startBalloonGame()">Start Game 🎈</button>
+    </div>
+    <div id="counter" class="counter">🎈 <span id="count">0</span>/19</div>
+  </div>
+
+  <!-- CANDLE -->
+  <div id="candleSection" class="page">
+    <div class="message-box">
+      <div style="font-size:28px;">🎉 Yayyy!! You're officially 19 now! 💗✨</div>
+      <div style="font-size:20px; margin-top:10px;">Now... Blow the candle! 🌬️</div>
+    </div>
+
+    <div class="candle-wrapper">
+      <img src="images/candle.png" class="candle-img" alt="Candle">
+      <button class="btn" onclick="blowCandle()">Blow Candle 🌬️</button>
+    </div>
+
+    <div id="friendOverlay" class="friend-overlay">
+      <img src="images/friend.png" class="friend-img" alt="Friend">
+    </div>
+  </div>
+
+  <!-- WISH -->
+  <div id="page2" class="page">
+    <div id="wishSection">
+      <div class="speech-bubble">Write a birthday wish for yourself! 💝</div>
+      <textarea id="wishInput" placeholder="Type your magical wish here..."></textarea>
+      <br><br>
+      <button class="btn" onclick="submitWish()">Submit Wish ✨</button>
+    </div>
+
+    <div id="wishPaper" class="hidden">
+      <div class="paper" id="paperDiv">
+        <p id="wishText" style="font-size:20px; color:#333; margin-bottom:12px; font-family:'Caveat',cursive;"></p>
+        <button class="btn" onclick="goToCake()">Continue 💫</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CAKE -->
+  <div id="page3" class="page">
+    <h2 style="font-size:40px; color:#ff1493; font-family:'Pacifico',cursive; margin-bottom:25px; text-shadow:2px 2px 5px rgba(0,0,0,0.15);">Cut the Cake! 🎂</h2>
+    <img src="images/cake.png" class="cake-img" onclick="cutCake()" alt="Cake">
+    <div id="revealSection" class="hidden">
+      <div class="reveal-text">HAPPY BIRTHDAY NAMI 🎂💗✨</div>
+      <div class="final-message">
+        <p><strong>Happieee Birthdayy, Namiii 🥹🎂💗</strong></p>
+        <p style="margin-top:16px;">You're honestly the best friend I've ever met on the internet, and I really want you to know how special you are to me.</p>
+        <p style="margin-top:12px;">My sweet best friend, even though we met long ago, these last 4 months of talking mean everything to me.</p>
+        <p style="margin-top:12px;">You came into my life at a time when I was really low, and you made sure I never felt alone.</p>
+        <p style="margin-top:12px;">You helped me through my sadness, my overthinking, and my loneliness in ways I can never fully explain.</p>
+        <p style="margin-top:12px;">You didn't just make me smile — you made me feel okay again.</p>
+        <p style="margin-top:12px;">I truly wish we never become strangers, and that our friendship stays forever, no matter what.</p>
+        <p style="margin-top:16px;"><strong>I'm really grateful for you, Namii. Always stay the same beautiful soul you are 💗✨</strong></p>
+        <p class="signature">~ Best Wishes from RAJ 💝</p>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const page0 = document.getElementById('page0');
+  const page1 = document.getElementById('page1');
+  const candleSection = document.getElementById('candleSection');
+  const page2 = document.getElementById('page2');
+  const page3 = document.getElementById('page3');
+  const friendOverlay = document.getElementById('friendOverlay');
+  const wishInput = document.getElementById('wishInput');
+  const wishText = document.getElementById('wishText');
+  const wishPaper = document.getElementById('wishPaper');
+  const wishSection = document.getElementById('wishSection');
+  const revealSection = document.getElementById('revealSection');
+
+  let balloonCount = 0;
+  let gameInterval = null;
+
+  const balloonImages = ['images/balloon1.png', 'images/balloon2.png'];
+
+  // auto transition from loading -> page1
+  setTimeout(() => {
+    page0.classList.remove('active');
+    page1.classList.add('active');
+  }, 3200);
+
+  function startBalloonGame() {
+    document.getElementById('gameSection').innerHTML = '';
+    document.getElementById('counter').style.display = 'block';
+    balloonCount = 0;
+    document.getElementById('count').textContent = balloonCount;
+
+    // spawn until 19 are popped
+    gameInterval = setInterval(() => {
+      if (balloonCount < 19) createBalloon();
+    }, 650);
+  }
+
+  function createBalloon() {
+    const balloon = document.createElement('img');
+    balloon.className = 'balloon';
+    balloon.src = balloonImages[Math.floor(Math.random() * balloonImages.length)];
+    balloon.style.left = Math.max(8, Math.random() * (window.innerWidth - 100)) + 'px';
+    const dur = 5000 + Math.floor(Math.random() * 2500);
+    balloon.style.animationDuration = dur + 'ms';
+    balloon.style.bottom = '-120px';
+
+    balloon.onclick = function (e) {
+      e.stopPropagation();
+      balloon.style.animation = 'none';
+      balloon.style.transform = 'scale(0)';
+      setTimeout(() => balloon.remove(), 200);
+
+      balloonCount++;
+      document.getElementById('count').textContent = balloonCount;
+
+      if (balloonCount >= 19) {
+        clearInterval(gameInterval);
+        setTimeout(() => {
+          page1.classList.remove('active');
+          candleSection.classList.add('active');
+        }, 900);
+      }
+    };
+
+    page1.appendChild(balloon);
+    setTimeout(() => {
+      if (balloon.parentElement) balloon.remove();
+    }, 7000);
+  }
+
+  function blowCandle() {
+    friendOverlay.style.display = 'block';
+    setTimeout(() => {
+      candleSection.classList.remove('active');
+      page2.classList.add('active');
+    }, 4000);
+  }
+
+  function submitWish() {
+    const wish = wishInput.value.trim();
+    if (!wish) { alert('Please write a wish first! 💝'); return; }
+    wishText.textContent = wish;
+    wishSection.classList.add('hidden');
+    wishPaper.classList.remove('hidden');
+  }
+
+  function goToCake() {
+    page2.classList.remove('active');
+    page3.classList.add('active');
+    page3.classList.add('knife-cursor');
+  }
+
+  function cutCake() {
+    revealSection.classList.remove('hidden');
+    createConfetti();
+    setTimeout(() => {
+      revealSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 500);
+  }
+
+  function createConfetti() {
+    const colors = ['#ff69b4','#ff1493','#ffd700','#ff6347','#98fb98','#87ceeb','#dda0dd'];
+    for (let i=0;i<120;i++){
+      setTimeout(()=>{
+        const c = document.createElement('div');
+        c.className = 'confetti';
+        c.style.left = (Math.random()*100)+'vw';
+        c.style.background = colors[Math.floor(Math.random()*colors.length)];
+        c.style.width = (6 + Math.random()*12)+'px';
+        c.style.height = c.style.width;
+        c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+        document.body.appendChild(c);
+        setTimeout(()=>c.remove(),3800);
+      }, i*10);
+    }
+  }
+</script>
+</body>
+</html>
