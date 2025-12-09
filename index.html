@@ -9,29 +9,54 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Caveat', cursive; overflow-x: hidden; touch-action: manipulation; }
 
-    .page { display: none; min-height: 100vh; padding: 20px; animation: fadeIn .5s ease; position: relative; overflow: hidden; background-image: url("images/back1.jpg"); background-size:cover; background-position:center; }
+    .page { display: none; min-height: 100vh; padding: 20px; animation: fadeIn .5s ease; position: relative; overflow: hidden; }
     .page.active { display:flex; flex-direction:column; align-items:center; justify-content:center; }
     @keyframes fadeIn { from { opacity:0 } to { opacity:1 } }
 
-    /* Loading */
-    #page0 { background: linear-gradient(135deg,#fff5f9 0%,#ffe8f3 100%); background-image: none; }
+    /* Loading Page with GIF background */
+    #page0 { 
+      background-image: url("images/sakura.gif");
+      background-size: cover;
+      background-position: center;
+    }
+    #page0::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(220, 53, 120, 0);
+      z-index: 0;
+    }
+    #page0 > * {
+      position: relative;
+      z-index: 1;
+    }
     .loading-container { text-align:center; width:90%; max-width:560px; }
-    .loading-text { font-size:32px; color:#dc143c; font-weight:700; font-family:'Satisfy',cursive; margin-bottom:24px; }
+    .loading-text { font-size:32px; color:#ff00cc; font-weight:700; font-family:'Satisfy',cursive; margin-bottom:24px; }
     .progress-wrapper { position:relative; width:100%; height:44px; background:#fff; border-radius:25px; border:3px solid #dc143c; overflow:visible; box-shadow:0 5px 20px rgba(0,0,0,.12); }
     .progress-bar { height:100%; width:0; background:linear-gradient(90deg,#dc143c,#ff0000); animation:fillBar 3s ease-in-out forwards; border-radius:25px; }
     @keyframes fillBar { from { width:0 } to { width:100% } }
-    .f1-car { position:absolute; top:-30px; left:0; width:130px; animation:driveCar 3s forwards ease-in-out; filter:drop-shadow(0 5px 15px rgba(0,0,0,.25)); z-index:10; }
+    .f1-car { position:absolute; top:-30px; left:0; width:130px; animation:driveCar 3s forwards ease-in-out; filter:drop-shadow(0 5px 15px rgba(6, 6, 6, 0.204)); z-index:10; }
     @keyframes driveCar { from { left:-150px } to { left:calc(100% - 30px) } }
 
     /* Page1 - balloons */
+    #page1 {
+      background-image: url("images/back1.jpg");
+      background-size: cover;
+      background-position: center;
+    }
     .title { font-size:48px; color:#ff1493; background:rgba(255,255,255,.95); padding:25px 35px; border-radius:25px; margin-bottom:24px; font-family:'Caveat',cursive; text-align:center; box-shadow:3px 3px 10px rgba(0,0,0,.1); }
     .btn { padding:18px 44px; font-size:24px; border-radius:50px; border:0; cursor:pointer; color:#fff; background:linear-gradient(135deg,#ff69b4,#ff1493); box-shadow:0 8px 20px rgba(255,20,147,.25); font-family:'Caveat',cursive; font-weight:bold; transition: all 0.3s; }
     .btn:hover { transform: scale(1.05); }
-    .balloon { position:absolute; width:70px; cursor:pointer; filter:drop-shadow(0 6px 10px rgba(0,0,0,.2)); animation:floatUp linear; }
+    .balloon { position:absolute; width:70px; cursor:pointer; filter:drop-shadow(0 6px 10px rgba(245, 243, 243, 0.114)); animation:floatUp linear; }
     @keyframes floatUp { 0%{ bottom:-120px } 100%{ bottom:110vh } }
     .counter { position:fixed; top:20px; right:20px; background:#fff; padding:18px 26px; border-radius:20px; font-size:30px; color:#ff1493; box-shadow:0 6px 20px rgba(0,0,0,.12); display:none; z-index:100; }
 
     /* Candle */
+    #candleSection {
+      background-image: url("images/back1.jpg");
+      background-size: cover;
+      background-position: center;
+    }
     .message-box { background:rgba(255,255,255,.98); padding:32px; border-radius:20px; box-shadow:0 10px 30px rgba(0,0,0,.12); font-size:24px; color:#ff1493; margin-bottom:24px; max-width:720px; text-align:center; font-family:'Satisfy',cursive; }
     .candle-wrapper { position:relative; text-align:center; }
     .candle-img { width:220px; filter:drop-shadow(0 10px 20px rgba(0,0,0,.18)); margin-bottom:25px; }
@@ -45,12 +70,77 @@
       100%{ width:120vw; height:120vh; opacity:0; transform:translate(-50%,-50%) scale(2.5); border-radius:0; } 
     }
 
-    /* Wish Page */
+    /* Wish Page with falling leaves GIF */
+    #page2 {
+      background-image: url("images/leaves.gif");
+      background-size: cover;
+      background-position: center;
+    }
+    #page2::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 245, 249, 0.027);
+      z-index: 0;
+    }
+    #page2 > * {
+      position: relative;
+      z-index: 1;
+    }
+    
     .speech-bubble { background:rgba(255,255,255,.98); padding:22px; border-radius:20px; box-shadow:0 8px 25px rgba(0,0,0,.12); font-size:22px; color:#ff69b4; margin:18px 0; font-family:'Satisfy',cursive; max-width:550px; text-align:center; }
     textarea { width:100%; max-width:520px; height:120px; padding:18px; font-size:18px; border-radius:14px; border:3px solid #ff69b4; resize:none; font-family:'Caveat',cursive; }
-    .paper { background:linear-gradient(135deg,#fdfbf3,#fff9e6); padding:28px; border-radius:16px; box-shadow:0 15px 40px rgba(0,0,0,.12); max-width:600px; border:3px solid #d4af37; }
+    
+    /* Origami plane animation */
+    .paper { 
+      background:linear-gradient(135deg,#ffc0cb,#ffb6c1); 
+      padding:28px; 
+      border-radius:16px; 
+      box-shadow:0 15px 40px rgba(0,0,0,.12); 
+      max-width:600px; 
+      border:3px solid #ff69b4;
+      position: relative;
+      transition: all 0.8s ease;
+    }
+    
+    .paper.folding {
+      animation: foldToPlane 2s ease-in-out forwards;
+    }
+    
+    @keyframes foldToPlane {
+      0% {
+        transform: scale(1) rotate(0deg);
+        border-radius: 16px;
+        opacity: 1;
+      }
+      15% {
+        transform: scale(0.95) rotateY(10deg);
+      }
+      30% {
+        transform: scale(0.7) rotateY(30deg) rotateZ(-5deg);
+        border-radius: 50% 0 50% 0;
+      }
+      45% {
+        transform: scale(0.5) rotateY(50deg) rotateZ(-20deg);
+      }
+      60% {
+        transform: scale(0.3) rotateY(70deg) rotateZ(-35deg);
+        border-radius: 0;
+        clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+      }
+      100% {
+        transform: translate(150vw, -100vh) scale(0.15) rotate(45deg);
+        opacity: 0;
+        clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+      }
+    }
 
     /* Cake page */
+    #page3 {
+      background-image: url("images/back1.jpg");
+      background-size: cover;
+      background-position: center;
+    }
     #page3.knife-cursor { cursor: url("images/knife.png") 10 10, auto; }
     .cake-img { width:350px; cursor:pointer; filter: drop-shadow(0 15px 30px rgba(0,0,0,.18)); transition:transform 0.3s; }
     .cake-img:hover { transform:scale(1.03); }
@@ -72,7 +162,7 @@
   <audio id="bgMusic" src="audio/birthday.mp3" autoplay loop></audio>
   <audio id="popSound" src="audio/pop.mp3"></audio>
 
-  <!-- PAGE 0 -->
+  <!-- PAGE 0 - LOADING -->
   <div id="page0" class="page active">
     <div class="loading-container">
       <div class="loading-text">Surprise is Loading... ✨</div>
@@ -83,7 +173,7 @@
     </div>
   </div>
 
-  <!-- PAGE 1 -->
+  <!-- PAGE 1 - BALLOON GAME -->
   <div id="page1" class="page">
     <h1 class="title">Happy Birthday GoldFish 💗🎂✨</h1>
     <div id="gameSection">
@@ -92,7 +182,7 @@
     <div id="counter" class="counter">🎈 <span id="count">0</span>/19</div>
   </div>
 
-  <!-- CANDLE -->
+  <!-- CANDLE PAGE -->
   <div id="candleSection" class="page">
     <div class="message-box">
       <div style="font-size:28px;">🎉 Yayyy!! You're officially 19 now! 💗✨</div>
@@ -109,7 +199,7 @@
     </div>
   </div>
 
-  <!-- WISH -->
+  <!-- PAGE 2 - WISH PAGE -->
   <div id="page2" class="page">
     <div id="wishSection">
       <div class="speech-bubble">Write a birthday wish for yourself! 💝</div>
@@ -126,14 +216,14 @@
     </div>
   </div>
 
-  <!-- CAKE -->
+  <!-- PAGE 3 - CAKE CUT -->
   <div id="page3" class="page">
     <h2 style="font-size:40px; color:#ff1493; font-family:'Caveat',cursive; margin-bottom:25px; text-shadow:2px 2px 5px rgba(0,0,0,0.15);">Cut the Cake! 🎂</h2>
     <img src="images/cake.png" class="cake-img" onclick="cutCake()" alt="Cake">
     <div id="revealSection" class="hidden">
-      <div class="reveal-text">HAPPY BIRTHDAY NAMI 🎂💗✨</div>
+      <div class="reveal-text">HAPPY BIRTHDAY NAMI 💗✨</div>
       <div class="final-message">
-        <p><strong>Happieee Birthdayy, Namiii 🥹🎂💗</strong></p>
+        <p><strong>Happieee Birthdayy, Namiii 🎂💗</strong></p>
         <p style="margin-top:16px;">You're honestly the best friend I've ever met on the internet, and I really want you to know how special you are to me.</p>
         <p style="margin-top:12px;">My sweet best friend, even though we met long ago, these last 4 months of talking mean everything to me.</p>
         <p style="margin-top:12px;">You came into my life at a time when I was really low, and you made sure I never felt alone.</p>
@@ -163,8 +253,9 @@
   let gameInterval = null;
 
   const balloonImages = ['images/balloon1.png', 'images/balloon2.png'];
-  const popSound = document.getElementById("popSound"); // ❤️ FIXED
-  // auto transition from loading -> page1
+  const popSound = document.getElementById("popSound");
+  
+  // Auto transition from loading -> page1
   setTimeout(() => {
     page0.classList.remove('active');
     page1.classList.add('active');
@@ -176,7 +267,7 @@
     balloonCount = 0;
     document.getElementById('count').textContent = balloonCount;
 
-    // spawn until 19 are popped
+    // Spawn balloons until 19 are popped
     gameInterval = setInterval(() => {
       if (balloonCount < 19) createBalloon();
     }, 650);
@@ -193,8 +284,8 @@
 
     balloon.onclick = function (e) {
       e.stopPropagation();
-      popSound.currentTime = 0;   // restart sound
-      popSound.play();            // 🔥 POP SOUND HERE
+      popSound.currentTime = 0;
+      popSound.play();
       balloon.style.animation = 'none';
       balloon.style.transform = 'scale(0)';
       setTimeout(() => balloon.remove(), 200);
@@ -234,9 +325,14 @@
   }
 
   function goToCake() {
-    page2.classList.remove('active');
-    page3.classList.add('active');
-    page3.classList.add('knife-cursor');
+    const paperDiv = document.getElementById('paperDiv');
+    paperDiv.classList.add('folding');
+    
+    setTimeout(() => {
+      page2.classList.remove('active');
+      page3.classList.add('active');
+      page3.classList.add('knife-cursor');
+    }, 2000);
   }
 
   function cutCake() {
@@ -273,4 +369,3 @@
 </script>
 </body>
 </html> 
-
